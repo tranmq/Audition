@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using Audition.Domain.Entities;
 
 namespace Audition.Data.Service

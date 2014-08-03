@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Audition.Data.Service;
 using Newtonsoft.Json;
 
 namespace Audition.Data.Service.UnitTests
