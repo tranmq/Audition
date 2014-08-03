@@ -5,6 +5,7 @@ using System.Collections.Generic;
  using Audition.Data.Service;
  using Audition.Domain.Entities;
  using Audition.Models;
+ using Audition.Resources;
 
 namespace Audition.Controllers
 {
@@ -16,7 +17,7 @@ namespace Audition.Controllers
         {
             if (productData == null)
             {
-                throw new ArgumentNullException("productData", "Check Ioc config.");
+                throw new ArgumentNullException("productData", StringResource.IoCError);
             }
             _productData = productData;
         }

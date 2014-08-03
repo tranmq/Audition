@@ -1,12 +1,13 @@
-﻿@model Audition.Domain.Entities.Product
+﻿@using Audition.Resources
+@model Audition.Domain.Entities.Product
 
 @{
-    ViewBag.Title = "Product Detail - " + Model.Name;
+    ViewBag.Title = StringResource.ProductDetailTitle + " - " + Model.Name;
 }
 
 <div class="container">
     <p>
-        @Html.ActionLink("Back to Search Results", "Index", "Home", null, new {@class = "link"})
+        @Html.ActionLink(StringResource.BackToSearchResultLinkText, "Index", "Home", null, new {@class = "link"})
     </p>
     <table>
         <tr>
@@ -16,25 +17,25 @@
             <td class="product-desc" >
                 <table>
                     <tr>
-                        <td>Brand:</td>
+                        <td>@StringResource.BrandLabel</td>
                         <td>@Model.Brand</td>
                     </tr>
                     <tr>
-                        <td>Description:</td>
+                        <td>@StringResource.DescriptionLabel</td>
                         <td>@Model.Name</td>
                     </tr>
                     <tr>
-                        <td>Product Id:</td>
+                        <td>@StringResource.ProductIdLabel</td>
                         <td>@Model.StyleId</td>
                     </tr>
                     <tr>
-                        <td>Price:</td>
+                        <td>@StringResource.PriceLabel</td>
                         <td>@Model.FormattedRegularPrice</td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             <p align="center">
-                                @Html.ActionLink("Add to cart", "Index", "Home", null, new { @class = "btn btn-shopping-cart" })
+                                @Html.ActionLink(StringResource.AddToCartButtonText, "Index", "Home", null, new { @class = "btn btn-shopping-cart" })
                             </p>
                         </td>
                     </tr>
