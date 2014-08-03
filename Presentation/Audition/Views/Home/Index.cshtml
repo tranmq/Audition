@@ -1,0 +1,25 @@
+﻿@using Audition.Domain.Entities
+@model Audition.Models.SearchResultModel
+
+@{
+    ViewBag.Title = "Search Results";
+}
+<div class="container product-container">
+    <ul class="products">
+        @{
+            foreach (Product product in Model.ProductList)
+            {
+                <li>
+                    <a href='@Url.Action("ProductDetail", "Home", new {styleId = product.StyleId})'>
+                        <img src="@product.ImageUrl" alt="@product.Name"/>
+                        <p>
+                            @product.FormattedRegularPrice<br/>
+                            @product.Name<br/>
+                            @product.Brand
+                        </p>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+</div>
