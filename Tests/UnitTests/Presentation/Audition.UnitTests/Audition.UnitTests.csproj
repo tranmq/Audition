@@ -35,7 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Presentation\Audition\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,17 +57,26 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="TestsForHomeController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Domain\Audition.Domain.Entities\Audition.Domain.Entities.csproj">
+      <Project>{32DBCA92-4C5A-48DA-96EB-89774DF1D242}</Project>
+      <Name>Audition.Domain.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Presentation\Audition\Audition.csproj">
       <Project>{c0f8762d-b36d-40b6-8548-ded625b151ae}</Project>
       <Name>Audition</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Services\Audition.Data.Service\Audition.Data.Service.csproj">
+      <Project>{B07ABCC0-28C1-454B-93CF-189ECB201519}</Project>
+      <Name>Audition.Data.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
