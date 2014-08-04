@@ -31,7 +31,8 @@ namespace Audition.DependencyResolution {
                                         scan.WithDefaultConventions();
                                     });
                             x.For<HttpContext>().Use(ctx => HttpContext.Current);
-                            x.For<IProductData>().Use<ProductData>();
+                            x.For<IDatabaseReader>().Use<DatabaseFileInAppDataReader>();
+                            x.For<IProductData>().Singleton().Use<ProductData>();
                         });
             return ObjectFactory.Container;
         }

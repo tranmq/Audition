@@ -9,6 +9,11 @@ namespace Audition.Domain.Entities
 
         public Product(Product toCopy)
         {
+            if (toCopy == null)
+            {
+                return;
+            }
+
             Brand = toCopy.Brand;
             FormattedRegularPrice = toCopy.FormattedRegularPrice;
             ImageUrl = toCopy.ImageUrl;

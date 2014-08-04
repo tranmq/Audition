@@ -1,6 +1,7 @@
 ﻿ using System;
 using System.Collections.Generic;
  using System.Configuration;
+ using System.Linq;
  using System.Web.Mvc;
  using Audition.Data.Service;
  using Audition.Domain.Entities;
@@ -24,12 +25,10 @@ namespace Audition.Controllers
 
         public ViewResult Index()
         {
-            LoadProductData();
-            List<Product> productList = _productData.GetAllProducts();
+            List<Product> productList = _productData.GetAllProducts().Select(x => new Product(x)).ToList();
             foreach (var product in productList)
             {
-                product.ImageUrl = String.Format(ConfigurationManager.AppSettings["ImageThumbnailPartialUrl"],
-                                                 product.ImageUrl);
+                product.ImageUrl = String.Format(ConfigurationManager.AppSettings["ImageThumbnailPartialUrl"], product.ImageUrl);
             }
             var model = new SearchResultModel(productList);
             return View(model);
@@ -37,23 +36,11 @@ namespace Audition.Controllers
 
         public ViewResult ProductDetail(int styleId)
         {
-            LoadProductData();
-            var product = _productData.GetProductByStyleId(styleId);
+            var product = new Product(_productData.GetProductByStyleId(styleId));
             product.ImageUrl = string.Format(ConfigurationManager.AppSettings["ProductDetailImagePartialUrl"],
                                              product.ImageUrl);
 
             return View(product);
-        }
-
-        private void LoadProductData()
-        {
-            _productData.LoadProductDataFromJson(ReadJsonDatabase);
-        }
-
-        private string ReadJsonDatabase()
-        {
-            var databasePath = HttpContext.Server.MapPath("~/App_Data/Database.json");
-            return System.IO.File.ReadAllText(databasePath);
         }
     }
 }
