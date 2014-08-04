@@ -5,6 +5,17 @@ namespace Audition.Domain.Entities
 {
     public class Product : IEquatable<Product>
     {
+        public Product() {}
+
+        public Product(Product toCopy)
+        {
+            Brand = toCopy.Brand;
+            FormattedRegularPrice = toCopy.FormattedRegularPrice;
+            ImageUrl = toCopy.ImageUrl;
+            Name = toCopy.Name;
+            StyleId = toCopy.StyleId;
+        }
+
         [JsonProperty("brand")]
         public string Brand { get; set; }
 

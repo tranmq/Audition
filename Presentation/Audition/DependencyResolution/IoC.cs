@@ -16,6 +16,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using System.Web;
 using Audition.Data.Service;
 using StructureMap;
 using StructureMap.Graph;
@@ -29,6 +30,7 @@ namespace Audition.DependencyResolution {
                                         scan.TheCallingAssembly();
                                         scan.WithDefaultConventions();
                                     });
+                            x.For<HttpContext>().Use(ctx => HttpContext.Current);
                             x.For<IProductData>().Use<ProductData>();
                         });
             return ObjectFactory.Container;

@@ -6,6 +6,18 @@ namespace Audition.Domain.Entities.UnitTests
     public class TestsForProduct
     {
         [TestMethod]
+        public void CopyConstructorCreatesNewProductWithSameValues()
+        {
+            var product = new Product { StyleId = 1, Name = "name", Brand = "brand", FormattedRegularPrice = "$1.00", ImageUrl = "somewhere" };
+            var newProduct = new Product(product);
+            Assert.AreEqual(product.Brand, newProduct.Brand);
+            Assert.AreEqual(product.FormattedRegularPrice, newProduct.FormattedRegularPrice);
+            Assert.AreEqual(product.ImageUrl, newProduct.ImageUrl);
+            Assert.AreEqual(product.Name, newProduct.Name);
+            Assert.AreEqual(product.StyleId, newProduct.StyleId);
+        }
+
+        [TestMethod]
         public void ProductsWithSameStyleIdAreEqual()
         {
             var product1 = new Product { StyleId = 1, Name = "prod1", Brand = "prod1", FormattedRegularPrice = "$1.00", ImageUrl = "somewhere" };

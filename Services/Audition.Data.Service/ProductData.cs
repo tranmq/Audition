@@ -8,34 +8,52 @@ namespace Audition.Data.Service
 {
     public class ProductData : IProductData
     {
+        private readonly IDatabaseReader _databaseReader;
         private List<Product> _distinctProductList = new List<Product>();
         private Dictionary<int, Product> _productTable = new Dictionary<int, Product>(); // key is StyleId
-        /// <summary>
-        /// Loads product data using the given jsonProducer.
-        /// </summary>
-        /// <param name="jsonProducer">
-        /// The function that reads data from a source and returns the JSON string.
-        /// </param>
-        public void LoadProductDataFromJson(Func<string> jsonProducer)
-        {
-            if (jsonProducer == null)
-            {
-                throw new ArgumentNullException();
-            }
+        private readonly object _sync = new object();
+        private bool _dataLoaded;
 
-            var productList = JsonConvert.DeserializeObject<List<Product>>(jsonProducer());
-            _distinctProductList = productList.Distinct().ToList();
-            _productTable = _distinctProductList.ToDictionary(x => x.StyleId, x => x);
+        public ProductData(IDatabaseReader databaseReader)
+        {
+            if (databaseReader == null)
+            {
+                throw new ArgumentNullException("databaseReader");
+            }
+            _databaseReader = databaseReader;
         }
 
         public List<Product> GetAllProducts()
         {
-            return _distinctProductList;
+            CheckAndLoadProductDataIfNeedTo();
+            return _distinctProductList.Select(x => new Product(x)).ToList();
         }
 
         public Product GetProductByStyleId(int styleId)
         {
-            return _productTable.ContainsKey(styleId) ? _productTable[styleId] : null;
+            CheckAndLoadProductDataIfNeedTo();
+            return _productTable.ContainsKey(styleId) ? new Product(_productTable[styleId]) : null;
+        }
+
+        private void CheckAndLoadProductDataIfNeedTo()
+        {
+            lock (_sync)
+            {
+                if (_dataLoaded)
+                {
+                    return;
+                }
+                LoadProductData();
+                _dataLoaded = true;
+            }
+        }
+
+        private void LoadProductData()
+        {
+            var jsonData = _databaseReader.ReadAll();
+            var productList = JsonConvert.DeserializeObject<List<Product>>(jsonData);
+            _distinctProductList = productList.Distinct().ToList();
+            _productTable = _distinctProductList.ToDictionary(x => x.StyleId, x => x);
         }
     }
 }

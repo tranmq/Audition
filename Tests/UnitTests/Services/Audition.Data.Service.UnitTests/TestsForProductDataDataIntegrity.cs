@@ -1,17 +1,19 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace Audition.Data.Service.UnitTests
 {
     [TestClass]
     public class TestsForProductDataDataIntegrity
     {
-        private readonly ProductData _productData;
+        private ProductData _productData;
+        private readonly Mock<IDatabaseReader> _mockDatabaseReader = new Mock<IDatabaseReader>();
 
-        public TestsForProductDataDataIntegrity()
+        [TestInitialize]
+        public void TestInit()
         {
-            _productData = new ProductData();
-            _productData.LoadProductDataFromJson(TestHelper.MakeTestProductDataJson);
+            _productData = new ProductData(_mockDatabaseReader.Object);
         }
 
         [TestMethod]
