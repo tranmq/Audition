@@ -34,15 +34,6 @@ namespace Audition.Data.Service.UnitTests
         public void WhenJsonDataIsGood_ShouldSucceed()
         {
             _productData.LoadProductDataFromJson(TestHelper.MakeTestProductDataJson);
-            Assert.IsTrue(_productData.DataLoaded);
-        }
-
-        [TestMethod]
-        public void WhenDataAlreadyLoaded_DoNothing()
-        {
-            _productData.LoadProductDataFromJson(TestHelper.MakeTestProductDataJson);
-            // If the the method still tries to load on the next call, exception should be thrown.
-            _productData.LoadProductDataFromJson(TestHelper.JsonProducerThatThrowsException);
         }
     }
 }

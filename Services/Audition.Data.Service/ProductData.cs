@@ -18,10 +18,6 @@ namespace Audition.Data.Service
         /// </param>
         public void LoadProductDataFromJson(Func<string> jsonProducer)
         {
-            if (DataLoaded)
-            {
-                return;
-            }
             if (jsonProducer == null)
             {
                 throw new ArgumentNullException();
@@ -30,10 +26,7 @@ namespace Audition.Data.Service
             var productList = JsonConvert.DeserializeObject<List<Product>>(jsonProducer());
             _distinctProductList = productList.Distinct().ToList();
             _productTable = _distinctProductList.ToDictionary(x => x.StyleId, x => x);
-            DataLoaded = true;
         }
-
-        public bool DataLoaded { get; private set; }
 
         public List<Product> GetAllProducts()
         {

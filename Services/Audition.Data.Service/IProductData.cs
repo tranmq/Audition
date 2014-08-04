@@ -14,8 +14,6 @@ namespace Audition.Data.Service
         /// </param>
         void LoadProductDataFromJson(Func<string> jsonProducer);
 
-        bool DataLoaded { get; }
-
         List<Product> GetAllProducts();
 
         Product GetProductByStyleId(int styleId);

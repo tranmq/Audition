@@ -28,7 +28,7 @@ namespace Audition.Controllers
             List<Product> productList = _productData.GetAllProducts();
             foreach (var product in productList)
             {
-                product.ImageUrl = string.Format(ConfigurationManager.AppSettings["ImageThumbnailPartialUrl"],
+                product.ImageUrl = String.Format(ConfigurationManager.AppSettings["ImageThumbnailPartialUrl"],
                                                  product.ImageUrl);
             }
             var model = new SearchResultModel(productList);
